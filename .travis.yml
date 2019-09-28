@@ -1,0 +1,13 @@
+sudo: required #esegui i comandi come super user
+services:
+  - docker #installa una copia di docker
+
+before_install: # prima di installare serve fare il build del progetto
+  # build del container docker di dev e lo taggo come 
+  # utente-docker/nome-repository-github
+  - docker build -t gabrielescotti/docker-react -f Dockerfile.dev .
+
+script: # comandi per eseguire la test suite
+  #di default npm run test non si chiude automaticamente ma rimane in attesa
+  #dell'input dell'utente, aggiungendo "-- --coverage" si chiude al termine
+  - docker run -e CI=true USERNAME/docker-react npm run test -- --coverage
