@@ -12,6 +12,8 @@ RUN npm run build
 #scrivendo un secondo FROM docker capisce automaticamente che
 #il primo blocco è terminato, ogni blocco può avere un solo FROM
 FROM nginx
+#questo container espone la porta 80 --> elasticbeanstalk di aws legge automaticamente ed espone la porta
+EXPOSE 80
 #copiamo dalla fase precedente (builder) alla cartella di default 
 #da cui ngnix serve i files
 COPY --from=builder /app/build /usr/share/nginx/html
