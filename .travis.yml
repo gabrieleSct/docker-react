@@ -10,4 +10,4 @@ before_install: # prima di installare serve fare il build del progetto
 script: # comandi per eseguire la test suite
   #di default npm run test non si chiude automaticamente ma rimane in attesa
   #dell'input dell'utente, aggiungendo "-- --coverage" si chiude al termine
-  - docker run -e CI=true USERNAME/docker-react npm run test -- --coverage
+  - docker run -e CI=true gabrielescotti/docker-react npm run test -- --coverage
