@@ -11,3 +11,19 @@ script: # comandi per eseguire la test suite
   #di default npm run test non si chiude automaticamente ma rimane in attesa
   #dell'input dell'utente, aggiungendo "-- --coverage" si chiude al termine
   - docker run -e CI=true gabrielescotti/docker-react npm run test -- --coverage
+
+deploy: #configurazione per configurare il deploy to aws
+  provider: elasticbeanstalk #nome del servizio scelto su aws
+  region: "us-east-2" #codice della regione dove è stato creata l'applicazione aws
+                      #il codice si trova nel URL
+  app: "docker-react" #nome dell'applicazione scelto su aws
+  env: "DockerReact-env" #nome dell'environment creato su aws
+  bucket_name: "elasticbeanstalk-us-east-2-480800290578" #nome dello storage s3 creato nei servizi
+  bucket_path: "docker-react"
+  on:
+    branch: master #deploy soltanto quando il codice viene caricato sul master branch
+  access_key_id:
+    secure: "$AWS_ACCESS_KEY" #questa variabile va creata su trevis in settings -> Environment Variables con i valori creati alla creazione di un nuovo ad hoc su aws console
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY" #questa variabile va creata su trevis in settings -> Environment Variables con i valori creati alla creazione di un nuovo ad hoc su aws console
+  
