@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      #rendi visibile la porta 3000 del container sulla 3000 locale
+      # porta_locale:porta_container
+      - "3000:3000"
+    volumes: 
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes: 
+      # non linkare la cartella node_modules
+      # in locale si può eliminare in modo da averla solo nel container
+      - /app/node_modules
+      #linka la posizione corrente alla cartella app
+      - .:/app
+    # override del comando di defaut npm run start
+    command: ["npm", "run", "test"]
